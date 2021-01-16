@@ -1,6 +1,6 @@
 # AlbumArt
 
-This repo was created to preserve a Python3 script `albumart.py` written by Jean-Francois Dokes (JFD) to leverage his [Libupnpp for Control Points](https://www.lesbonscomptes.com/upmpdcli/libupnpp-refdoc/libupnpp-ctl.html) and made available by him to the [moOde Audio Player](https://github/moode-player/moode) project.
+This repo was created to preserve a Python3 script `albumart.py` written by Jean-Francois Dockes (JFD) to leverage his [Libupnpp for Control Points](https://www.lesbonscomptes.com/upmpdcli/libupnpp-refdoc/libupnpp-ctl.html) and made available by him to the [moOde Audio Player](https://github/moode-player/moode) project.
 
 The script was found to be missing a `debug()` function, which was added in my first commit after checking in the original.
 
@@ -22,7 +22,13 @@ function sysCmd($cmd) {
 ```
 In principle, it should have been possible to replace `upexplorer --album-art` with `albumart.py` and drive on. In practice, the albumArtURI was not being returned to PHP even though `albumart.py` worked flawlessly when invoked from the command line. Using `sys_exec()` in place of `exec()` with appropriate changes made no difference.
 
+20210114
 The culprit turned out to be the use of `os._exit()` in the Python script. When replaced with `sys.exit()` the script output gets returned. Changing the exit call was the subject of my next commit.
+
+20210115
+No, this "fix" works when the renderer is playing a track but the sys.exit() flushes error messages from within libupnpp to the output when there is no track playing. This "fix" needs to be fixed.
+
+-----
 
 Possible future change: integrate logging with the existing moOde/upmpdcli logging scheme.
 
