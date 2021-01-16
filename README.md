@@ -26,7 +26,7 @@ In principle, it should have been possible to replace `upexplorer --album-art` w
 The culprit turned out to be the use of `os._exit()` in the Python script. When replaced with `sys.exit()` the script output gets returned. Changing the exit call was the subject of my next commit.
 
 20210115
-No, this "fix" works when the renderer is playing a track but the sys.exit() flushes error messages from within libupnpp to the output when there is no track playing. This "fix" needs to be fixed.
+No, this "fix" works when the renderer is playing a track but the sys.exit() also flushes error messages from within libupnpp to the output when, for example, there is no track playing. This "fix" needs to be fixed.
 
 -----
 
